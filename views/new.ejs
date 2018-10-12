@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+<div class="container">
+    <h1 class="text-center">Create a New Restaurant</h1>
+    <div class="row">
+        <div class="col-md-4 offset-md-4 mt-3">
+            <form action="/goPlaces/restaurants" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" name="name" placeholder="name" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="image" placeholder="img url" />
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="description" placeholder="description" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary btn-block btn-lg" type="submit" value="Submit" />
+                </div>
+            </form>
+            <a href="/goPlaces/restaurants">Go Back</a>
+        </div>
+    </div>
+</div>
+<% include partials/footer %>
