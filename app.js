@@ -1,20 +1,18 @@
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose");
+    mongoose    = require("mongoose"),
+    Restaurant  = require("./models/restaurant"),
+    // Comment     = require("./models/comment"),
+    // User        = require("./models/user"),
+    seedDB      = require("./seeds");
 
+seedDB();
 mongoose.connect("mongodb://localhost:27017/go_places", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+mongoose.set("useFindAndModify", false);
 
-// SCHEMA SETUP
-var restaurantSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-
-var Restaurant = mongoose.model("Restaurant", restaurantSchema);
 
 app.get("/", function(req, res) {
     res.render("landing");
