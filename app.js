@@ -7,18 +7,17 @@ var express     = require("express"),
     // User        = require("./models/user"),
     seedDB      = require("./seeds");
 
-seedDB();
 mongoose.connect("mongodb://localhost:27017/go_places", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 mongoose.set("useFindAndModify", false);
-
+// seedDB();
 
 app.get("/", function(req, res) {
     res.render("landing");
 });
 
-//INDEX - show all restaurants 
+// INDEX - show all restaurants 
 app.get("/restaurants", function(req, res) {
     // Get all restaurants from DB
     Restaurant.find({}, function(err, restaurants) {
@@ -31,7 +30,7 @@ app.get("/restaurants", function(req, res) {
     });
 });
 
-//CREATE - add new restaurant to DB
+// CREATE - add new restaurant to DB
 app.post("/restaurants", function(req, res) {
     // get data from form and add to restaurants array
     var name    = req.body.name;
@@ -51,19 +50,20 @@ app.post("/restaurants", function(req, res) {
 
 });
 
-//NEW - show form to create new restaurant
+// NEW - show form to create new restaurant
 app.get("/restaurants/new", function(req, res) {
     res.render("new");
 });
 
-
+// SHOW - show more info about one restaurant
 app.get("/restaurants/:id", function(req, res) {
     //find the restaurant with provided ID
-    Restaurant.findById(req.params.id, function(err, foundRestaurant) {
+    Restaurant.findById(req.params.id).populate("comments").exec(function(err, foundRestaurant) {
         if (err) {
             console.log(err);
         }
         else {
+            console.log(foundRestaurant);
             //render show template with that restaurant
             res.render("show", {restaurant: foundRestaurant});
         }
