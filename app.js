@@ -25,7 +25,7 @@ app.get("/restaurants", function(req, res) {
             console.log(err);
         }
         else {
-            res.render("index", { restaurants: restaurants });
+            res.render("restaurants/index", { restaurants: restaurants });
         }
     });
 });
@@ -52,7 +52,7 @@ app.post("/restaurants", function(req, res) {
 
 // NEW - show form to create new restaurant
 app.get("/restaurants/new", function(req, res) {
-    res.render("new");
+    res.render("restaurants/new");
 });
 
 // SHOW - show more info about one restaurant
@@ -63,9 +63,23 @@ app.get("/restaurants/:id", function(req, res) {
             console.log(err);
         }
         else {
-            console.log(foundRestaurant);
             //render show template with that restaurant
-            res.render("show", {restaurant: foundRestaurant});
+            res.render("restaurants/show", {restaurant: foundRestaurant});
+        }
+    });
+});
+
+// =====================
+// COMMENTS ROUTES
+// =====================
+
+app.get("/restaurants/:id/comments/new", function(req, res) {
+    // find restaurant by id
+    Restaurant.findById(req.params.id, function(err, restaurant) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("comments/new", { restaurant: restaurant });
         }
     });
 });
