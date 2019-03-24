@@ -3,7 +3,7 @@ var express     = require("express"),
     bodyParser  = require("body-parser"),
     mongoose    = require("mongoose"),
     Restaurant  = require("./models/restaurant"),
-    // Comment     = require("./models/comment"),
+    Comment     = require("./models/comment"),
     // User        = require("./models/user"),
     seedDB      = require("./seeds");
 
@@ -80,6 +80,29 @@ app.get("/restaurants/:id/comments/new", function(req, res) {
             console.log(err);
         } else {
             res.render("comments/new", { restaurant: restaurant });
+        }
+    });
+});
+
+app.post("/restaurants/:id/comments", function(req, res) {
+    // lookup restaurant using ID
+    Restaurant.findById(req.params.id, function(err, restaurant) {
+        if(err) {
+            console.log(err);
+            res.redirect("/goPlaces/restaurants");
+        } else {
+            // create new comment
+            Comment.create(req.body.comment, function(err, comment) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    // connect new comment to restaurant
+                    restaurant.comments.push(comment);
+                    restaurant.save();
+                    // redirect to restaurant show page
+                    res.redirect("/goPlaces/restaurants/" + restaurant._id);
+                }
+            });
         }
     });
 });
