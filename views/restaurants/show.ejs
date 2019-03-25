@@ -1,18 +1,42 @@
 <% include ../partials/header %>
-
-<h1><p><%= restaurant.name %></p></h1>
-
-<img src="<%= restaurant.image %>">
-
-<p><%= restaurant.description %></p>
-
-<p>
-    <a class="btn btn-success" href="/goPlaces/restaurants/<%= restaurant._id %>/comments/new">Add New Comment</a>
-</p>
-
-<% restaurant.comments.forEach(function(comment) { %>
-    <p>
-        <strong><%= comment.author %></strong>  - <%= comment.text %>
-    </p>
-<% }) %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">GoPlaces</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card mb-3">
+                <img class="card-img-top show" src="<%= restaurant.image %>">
+                <div class="card-body">
+                    <h4 class="float-right">$$$</h4>
+                    <h4><a href="#"><p><%= restaurant.name %></p></a></h1>
+                    <p><%= restaurant.description %></p>
+                </div>
+            </div>
+            
+            <div class="card card-body bg-light">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/goPlaces/restaurants/<%= restaurant._id %>/comments/new">Add New Comment</a>
+                </div>
+                <hr>
+                <% restaurant.comments.forEach(function(comment) { %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= comment.author %></strong>
+                            <span class="float-right">10 days ago</span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
 <% include ../partials/footer %>
