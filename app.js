@@ -10,6 +10,8 @@ var express     = require("express"),
 mongoose.connect("mongodb://localhost:27017/go_places", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+console.log(__dirname);
 mongoose.set("useFindAndModify", false);
 // seedDB();
 
